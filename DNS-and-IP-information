@@ -4,17 +4,17 @@ import builtwith
 
 def gather_website_info(url):
     # DNS lookup
-    ip_address = socket.gethostbyname(url)
+    ip_address = socket.gethostbyname(url.replace("https://", "").replace("http://", "").replace("www.", ""))
     print('IP Address:', ip_address)
     print('-' * 30)
-    
+
     # Web server
-    response = requests.get('http://' + url)
+    response = requests.get('http://' + url.replace("https://", "").replace("www.", ""))
     web_server = response.headers.get('Server')
     if web_server:
         print('Web Server:', web_server)
         print('-' * 30)
-    
+
     # CMS detection
     technologies = builtwith.builtwith(url)
     if technologies:
@@ -27,5 +27,5 @@ def gather_website_info(url):
 website_url = input('Enter the website URL: ')
 
 # Call the function to gather website information
-if _name_ == "_main_":
+if __name__ == "__main__":
     gather_website_info(website_url)
