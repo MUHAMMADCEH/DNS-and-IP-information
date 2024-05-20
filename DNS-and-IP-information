@@ -3,13 +3,17 @@ import requests
 import builtwith
 
 def gather_website_info(url):
+    # Add http scheme if not present
+    if not url.startswith("http"):
+        url = "http://" + url
+
     # DNS lookup
     ip_address = socket.gethostbyname(url.replace("https://", "").replace("http://", "").replace("www.", ""))
     print('IP Address:', ip_address)
     print('-' * 30)
 
     # Web server
-    response = requests.get('http://' + url.replace("https://", "").replace("www.", ""))
+    response = requests.get(url.replace("https://", "http://").replace("www.", ""))
     web_server = response.headers.get('Server')
     if web_server:
         print('Web Server:', web_server)
